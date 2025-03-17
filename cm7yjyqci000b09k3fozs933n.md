@@ -1,0 +1,669 @@
+---
+title: "Setting Up My First DevOps Pipeline with Terraform & Ansible"
+seoTitle: "DevOps Pipeline with Terraform & Ansible"
+seoDescription: "In this project, I have built an automated CI/CD pipeline using Jenkins, Terraform, and Ansible. The pipeline provisions an AWS EC2 instance with Terraform,"
+datePublished: Fri Mar 07 2025 09:07:49 GMT+0000 (Coordinated Universal Time)
+cuid: cm7yjyqci000b09k3fozs933n
+slug: setting-up-my-first-devops-pipeline-with-terraform-and-ansible
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1741337811145/155ba3b3-f4e9-49b9-8a9a-8dd4ad44d026.avif
+ogImage: https://cdn.hashnode.com/res/hashnode/image/upload/v1741338417946/bb92203c-5cca-451f-a681-7c80893434d4.avif
+tags: cloud, ec2, aws, github, ansible, devops, terraform, jenkins
+
+---
+
+---
+
+## Creating and setting up an EC2 Instance on AWS
+
+* **Change subnet to ap-south-1 for Mumbai region and launch instance**
+    
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1741177290772/d0bd017e-d192-4be5-9b4e-d5a4fc20f498.png align="center")
+
+---
+
+## Connect Terminal with the instance through SSH
+
+go to connect in ec2 and connect in terminal through SSH
+
+---
+
+After connecting the terminal, **Update the terminal and install Java and Jenkins in it**
+
+```abap
+# Updating system
+sudo apt update
+
+# Installing Java.. Required for installation of Jenkins
+sudo apt install fontconfig openjdk-17-jre
+
+# Install Jenkins
+sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]" \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+sudo apt-get update
+sudo apt-get install jenkins
+```
+
+### After Installation, Enable Jenkins and Start Jenkins
+
+```bash
+# Enable Jenkins
+sudo systemctl enable jenkins
+
+# Start Jenkins
+sudo systemctl start jenkins
+
+# Check status of Jenkins
+sudo systemctl status jenkins
+```
+
+### Now Enabling Port 8080 inside EC2 instance for running Jenkins
+
+### Copy public url of your EC2 Instance and paste it in the browser, adding :8080 after IP
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1741178555046/cdb5453c-d0bb-418e-b396-d030b84a1669.png align="center")
+
+### Open Terminnal and extract password
+
+```bash
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+```
+
+### Copy Password and paste it in to Jenkins in browser
+
+Click **INSTALL SELECTED PLUGGINS** and it will take some time to install pluggins
+
+### Enter your credentials and press enter
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1741178938669/ecb179e0-6f65-4e76-9111-b273122c1327.png align="center")
+
+### AND We have entered into Jenkins 🥳
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1741179017650/d31f2c09-f3f0-433d-90d9-15389c2c87d0.png align="center")
+
+---
+
+# Now Creating Pipeline for our project
+
+* Click on **NEW ITEM,** then Provide **Name** and Select **Freestyle Project**
+    
+    ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1741179254458/eed4f800-c4ed-42db-bec9-4c7fdba5ef5f.png align="center")
+    
+
+---
+
+### Making a github repo and pasting linking in git section
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1741179850951/c4e23b62-acf2-43a3-9b9b-40bd8bb255eb.png align="center")
+
+### Inside Build Steps, select execute shell, and we're going to write this type of file (just an overview). Don’t copy and paste just now. )
+
+```bash
+#!/bin/bash	
+
+# using xe- :  x is debugging mode showing what is happening and e throws error if anything goes wrong
+set -xe
+
+# Moves into the folder where your Terraform code is stored
+cd /terraform
+
+terraform init	# Installing all dependencies for terraform
+# $TERRAFORM_ACTION is a variable that decides which Terraform command to run.
+terraform $TERRAFORM_ACTION -auto-approve	# -auto-approve skips manual confirmation (otherwise, Terraform asks for "yes" input)
+
+# Move to Ansible Directory
+
+# Check if terraform succeeds, if yes then only proceed to Ansible
+if [ "$TERRAFORM_ACTION" = "destroy" ]; then
+	exit 0
+else
+	cd ../ansible
+	ansible-playbook -i /opt/ansible/inventory/aws_ec2.yaml apache.yaml 	# run playbook of Ansible
+fi
+```
+
+---
+
+## Installing Terraform And Ansible into our Instance
+
+* **Installing Terraform**
+    
+    ```bash
+    ## Copy and paste in terminal
+    
+    sudo apt-get update && sudo apt-get install -y gnupg software-properties-common
+    
+    # Install the HashiCorp GPG key.
+    wget -O- https://apt.releases.hashicorp.com/gpg | \
+    gpg --dearmor | \
+    sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null
+    
+    # Verify the key's fingerprint.
+    gpg --no-default-keyring \
+    --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg \
+    --fingerprint
+    
+    echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
+    https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
+    sudo tee /etc/apt/sources.list.d/hashicorp.list
+    
+    sudo apt update
+    
+    sudo apt-get install terraform
+    ```
+    
+
+---
+
+### Running only terraform file in shell for better understanding
+
+```bash
+#!/bin/bash	
+
+# using xe- :  x is debugging mode showing what is happening and e throws error if anything goes wrong
+set -xe
+
+# Moves into the folder where your Terraform code is stored
+cd terraform
+
+terraform init	# Installing all dependencies for terraform
+terraform plan	# gives a detail view of what it is doing
+# $TERRAFORM_ACTION is a variable that decides which Terraform command to run.
+terraform $TERRAFORM_ACTION -auto-approve	# -auto-approve skips manual confirmation (otherwise, Terraform asks for "yes" input)
+```
+
+Now we need to create this **TERRAFORM\_ACTION** variable
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1741182697301/a0e91806-bae1-4377-bd3a-f0c859ab6293.png align="center")
+
+---
+
+## Modifying terraform folder
+
+---
+
+Create terraform folder and type ***vim main.tf***
+
+```bash
+# Installing AWS from hashicorp
+terraform {
+    required_providers {
+        aws = {
+            source = "hashicorp/aws"
+            version = "~> 5.88.0"
+        }
+    }
+    required_version = ">=1.2.0"
+}
+
+# Fetching latest AMI ID from AWS because if we hardcode, that image may become outdated
+data "aws_ami" "aws_linux" {
+    most_recent = true  # Get the latest image available AMI
+
+    # It tells Terraform to look for an AMI with a name that matches a specific pattern.
+    filter {
+      name   = "name"
+      values = ["amzn2-ami-kernel-5.10-hvm-*-x86_64-gp2"]
+    }
+
+    # It filters AMIs based on their virtualization type. "hvm" (Hardware Virtual Machine) is required for modern EC2 instances.
+    filter {
+      name   = "virtualization-type"
+      values = ["hvm"]
+    }
+
+}
+
+# Creation of AWS instance
+resource "aws_instance" "my_instance" {
+    # We can even hardcode value from aws but this is future proof
+    ami = data.aws_ami.aws_linux.id    # fetching ami from above filter block
+    instance_type = "t2.micro"
+    key_name = "Ansible-key"
+    tags = {
+        Name = "${var.name}-server"
+        Environment = "dev"    # using this to store instance id in inventory
+    }
+}
+
+# Create Bucket Manually from AWS
+```
+
+---
+
+creating **variable.tf**
+
+```bash
+variable "name" {
+    default = ""    # Taking input from user -- name of instance
+}
+```
+
+creating providers.tf
+
+```bash
+provider "aws" {
+    region = "ap-south-1"
+}
+```
+
+---
+
+### Creating backend for terraform for storing our data (storing the state file on s3 bucket we created) to store data on cloud
+
+so creating **backend.tf and linking our .tfstate with our created bucket**
+
+```bash
+terraform{
+    backend "s3" {
+        bucket = "devops-project-bucket-23"
+        key = "terraform/statefile.tfstate"    # defines the file path inside the S3 bucket where Terraform will store the state file.
+        region = "ap-south-1"
+    }
+}
+```
+
+---
+
+# Running Build in Jenkins for terraform
+
+<mark>Getting error on Terraform Init</mark>
+
+Error is coming because EC2 not have access to AWS credentials
+
+---
+
+### Creating role in IAM in AWS to provide him all permissions
+
+* Providing user two permissions
+    
+    1. Administator Access
+        
+    2. S3 Access
+        
+
+## Go inside security in EC2
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1741191741790/cf7e9003-1876-44c6-833a-64759a7a6eef.png align="center")
+
+### Then Update IAM role in there
+
+---
+
+### Downloading AWS CLI on EC2 Instance
+
+```bash
+sudo apt update && sudo apt install unzip -y
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+aws --version
+```
+
+### Providing credentials to EC2 using AWS CONFIGURE
+
+```bash
+# Configure AWS by 
+aws configure
+```
+
+```bash
+# This would be interface after writing this
+# AWS Access Key ID [None]: # from IAM user
+# AWS Secret Access Key [None]: # IAM
+# Default region name [None]: ap-south-1
+# Default output format [None]: # skip
+```
+
+### Then throwing Error for S3 bucket not created, so create it manually in AWS
+
+---
+
+### For Rebuilding previous build, Install the rebuilder plug-in in Jenkins
+
+![Install This](https://cdn.hashnode.com/res/hashnode/image/upload/v1741225485299/2a91e2c8-5b88-4c2d-9bf7-cf599db9b181.png align="center")
+
+---
+
+## Now Run the Build in Jenkins AND BOOM🎉, We got our instance
+
+Check for new instance in AWS Instance
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1741227097421/627ad976-8042-44e7-a133-e35477b11dd9.png align="center")
+
+---
+
+# Since there is heavy Load on Jenkins Master, creating Jenkins Slave instance
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1741228151362/029abdb1-356b-4f35-bb2f-48232628a002.png align="center")
+
+### Installing Java in Slave
+
+```bash
+# Updating system
+sudo apt update
+
+# Installing Java.. Required for installation of Jenkins
+sudo apt install fontconfig openjdk-17-jre
+```
+
+---
+
+### Connecting Jenkins Master With Slave using SSH
+
+Creating A New Node in Jenkins, i.e. Slave
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1741228611832/698a616d-6c4a-44c1-81bf-34aeffe67443.png align="center")
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1741228769857/9c884488-74ff-4010-95e3-8a6e5c621b89.png align="center")
+
+Save after configuration
+
+### Linking Our free-style project with agent (label)
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1741229098435/2fc29722-dc91-42d3-8859-ce64512e8f5e.png align="center")
+
+### AND OUR AGENT GETS CONNECTED WITH OUR MASTER🎉🎉
+
+---
+
+Jenkins is running build on Slave
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1741229764206/8760878d-9d31-41c6-b4d4-8bdce42bcdba.png align="center")
+
+---
+
+### Installing Terraform On Slave
+
+```bash
+## Copy and paste in terminal
+
+sudo apt-get update && sudo apt-get install -y gnupg software-properties-common
+
+# Install the HashiCorp GPG key.
+wget -O- https://apt.releases.hashicorp.com/gpg | \
+gpg --dearmor | \
+sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null
+
+# Verify the key's fingerprint.
+gpg --no-default-keyring \
+--keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg \
+--fingerprint
+
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
+https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
+sudo tee /etc/apt/sources.list.d/hashicorp.list
+
+sudo apt update
+
+sudo apt-get install terraform
+```
+
+## Providing IAM Role to Slave
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1741229948894/81891c6f-130e-4a85-8ff8-615d3bfac090.png align="center")
+
+### Now We have configured IAM with Terraform; now run the build
+
+---
+
+### Anddd we got SUCCESSS 🎉🎉
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1741230074681/16c44a72-d791-4790-a729-53748b5d84c2.png align="center")
+
+## Terraform has successfully made instance and has configured properly with our slave
+
+---
+
+# Now Time for integrating Ansible
+
+**Installing Ansible in our slave**
+
+```bash
+sudo apt-add-repository
+ ppa:ansible/ansible
+ sudo apt update
+ sudo apt install ansible
+```
+
+Now Installing Dynamic Inventory
+
+> * If **EC2 instances stop and start**, their **IP changes** (unless Elastic IP is used).
+>     
+> * You have to **manually update the inventory file** every time.
+>     
+> * This is **not scalable** for a dynamic cloud environment.
+>     
+>     ### **Solution: Dynamic Inventory!**
+>     
+>     * Instead of a fixed list, Ansible can **fetch real-time** instance details from AWS.
+>         
+>     * This means **no need to manually update IPs** in the inventory file.
+>         
+>     * Ansible will dynamically get all the required details from AWS **automatically**.
+>         
+
+```bash
+sudo apt install python3-pip
+pip install boto3 botocore  # These libraries allow Ansible to communicate with AWS.
+```
+
+---
+
+### Making an inventory file inside ansible folder to store data
+
+```bash
+mkdir -p ~/jenk_terra_ansib_project/ansible/inventory
+cd ~/jenk_terra_ansib_project/ansible/inventory
+```
+
+### Create a new file aws\_ec2.yml inside inventory and add this in it
+
+This will fetch all things with same tag (in our case: Env = "dev") and put it in the inventory
+
+```bash
+plugin: amazon.aws.aws_ec2
+regions:
+  - ap-south-1  # Change this to your AWS region
+filters:
+  instance-state-name: running  # Fetch only running instances
+  tag:Environment: "dev"
+
+# Group instances by Name
+keyed_groups:
+  - key: tags.Name  # Group instances based on AWS tags
+```
+
+---
+
+### Now Editing ansible config file
+
+```bash
+sudo mkdir -p /etc/ansible
+sudo nano /etc/ansible/ansible.cfg
+```
+
+```bash
+[default]
+inventory = /jenk_terra_ansib_project/ansible/inventory/aws_ec2.yml                                        >
+
+[inventory]
+enable_plugins = aws_ec2
+```
+
+---
+
+### Installing AWS CLI inside Slave ( this was causing error) 🥲
+
+```bash
+sudo apt update && sudo apt install unzip -y
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+aws --version
+```
+
+### Now doing aws configure in slave and providing all IAM details
+
+---
+
+# Error coming because I forgot to run build in Jenkins after updating Tag in main. tf😭
+
+```bash
+# Do this after running build to check if inventory is working fine or not
+ansible-inventory -i /home/ubuntu/jenk_terra_ansib_project/ansible/inventory/aws_ec2.yml --list -vvv
+```
+
+---
+
+## Creating apache\_play.yml PLAYBOOK inside apache Folder
+
+vim ansible\_play.yml
+
+if we run this ansible-inventory command, we see our host is
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1741257330890/ce93159c-39f7-4c6f-aa6f-5943f4488e6c.png align="center")
+
+In your **dynamic inventory ,**`aws_ec2.yml` the parsed output shows that your EC2 instance is grouped under `"aws_ec2"`
+
+---
+
+### Need to export private file from local to server to connect with instance we created
+
+```bash
+# In local where file is present do SCP
+sudo scp -i "Ansible-key.pem" Ansible-key.pem ubuntu@ec2-15-206-195-26.ap-south-1.compute.amazonaws.com:/home/ubuntu
+```
+
+---
+
+Creating ansible\_play.yml
+
+```bash
+-
+    name: Installing Apache Server
+    hosts: aws_ec2
+    become: yes
+    # connecting ec2 instance using SSH key
+    remote_user: ec2-user    # default for connecting aws EC2 instance
+    vars:
+        ansible_ssh_private_key_file: "/home/ubuntu/jenk_terra_ansib_project/ansible/Ansible-key.pem"
+    tasks:
+        # Installing Apache and PHP
+      - name: Install Apache and PHP
+        package:
+            name:
+               - httpd    # apache for amazon linux
+               - php
+            state: present
+        # Starting Apache Service
+      - name: Start Apache Service
+        service:
+            name: httpd
+            state: started
+            enabled: yes
+        # Download index.php file from my github repo
+      - name: Download index.php from my github repo to apache 
+        get_url:
+            # The "raw" content url is used to directly fetch the file from GitHub instead of cloning the whole repository.
+            url: "https://raw.githubusercontent.com/dakshsawhneyy/jenk_terra_ansib_project/main/ansible/index.php"
+            dest: "/var/www/html/index.php"
+      - name: need additional packages (wget) for installing terraform
+        package: 
+            name: wget
+            state: latest
+        # now we need to install terraform
+        # terraform integrates with jenkins for automation
+      - name: Installing Terraform
+        unarchive:
+            src: https://releases.hashicorp.com/terraform/0.9.1/terraform_0.9.1_linux_amd64.zip
+            dest: /usr/bin
+            remote_src: yes
+```
+
+---
+
+## Now adding Ansible part in jenkins configuration
+
+```bash
+#!/bin/bash	
+
+# using xe- :  x is debugging mode showing what is happening and e throws error if anything goes wrong
+set -xe
+
+# Moves into the folder where your Terraform code is stored
+cd /terraform
+
+terraform init	# Installing all dependencies for terraform
+# $TERRAFORM_ACTION is a variable that decides which Terraform command to run.
+terraform $TERRAFORM_ACTION -auto-approve	# -auto-approve skips manual confirmation (otherwise, Terraform asks for "yes" input)
+# as we give apply or destroy, it will run that command
+
+# Move to Ansible Directory
+# Add ansible part
+
+# Check if terraform succeeds, if yes then only proceed to Ansible
+if [ "$TERRAFORM_ACTION" = "destroy" ]; then
+	exit 0
+else
+	cd ../ansible
+	ansible-playbook -i ../ansible/inventory/aws_ec2.yml ansible_play.yml 	# run playbook of Ansible
+fi
+```
+
+### Selecting destroy in jenkins now to run Ansible code
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1741262723585/9ddb1d5a-d8fd-4017-aabd-4acc2029d649.png align="center")
+
+* Due to this **destroy**, Terraform destroys all infrastructure to start with new and then exits with code 0, so ansible doesn’t gets executed
+    
+* Then **apply**; it will create infra and also use code for Ansible
+    
+
+---
+
+# Error coming: AWS 2 pluggin needed cred
+
+```bash
+export AWS_ACCESS_KEY_ID="your-access-key"
+export AWS_SECRET_ACCESS_KEY="your-secret-key"
+export AWS_REGION="ap-south-1"
+```
+
+---
+
+## Error coming ‘connection time out’
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1741264151634/93666868-d380-455c-86bc-f867d81d9cd2.png align="center")
+
+### Fixing this. This is happening because the server is still initializing and Apache is sending requests to instances. To prevent this, add sleep after creation of instance so that first instance can be built successfully and then other operations will get performed
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1741264436433/c3fcdabb-3ba4-40b8-9f5c-667e994edef1.png align="center")
+
+and then **rebuild:**
+
+---
+
+## Again Error coming →
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1741266548658/6049fdd4-8fcd-4cb6-8a6c-d726c85a79a6.png align="center")
+
+Meaning it is unable to ssh into the instance, maybe unable to get verification (yes,no,fingerprint)
+
+```bash
+# Use this command in terminal, 
+ssh-keyscan ec2-13-126-179-52.ap-south-1.compute.amazonaws.com >> ~/.ssh/known_hosts
+```
+
+---
+
+**FINALLLLLYYYY**🎉🎉🎉🎉
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1741269452091/e0db3ede-6e1c-4b5e-a1d8-46fdd21e83bb.png align="center")
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1741269511343/519149aa-78de-490a-b4a6-45963a77412e.png align="center")
+
+### And the project gets completed 🎉🎉🥳🥳
