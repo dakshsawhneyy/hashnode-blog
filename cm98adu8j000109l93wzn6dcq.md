@@ -613,6 +613,14 @@ Backend is running fine too
 
 ---
 
+## After Finishing, don’t forget to delete cluster
+
+```bash
+eksctl delete cluster --name three-tier-cluster --region ap-south-1
+```
+
+---
+
 # Final Thoughts:
 
 ## Deploying a real-world 3-tier MERN application on AWS EKS with a custom domain was a huge milestone for me. This project taught me how different DevOps tools and cloud services work together—from Kubernetes manifests to Ingress rules and DNS configuration.
