@@ -12,6 +12,8 @@ tags: cloud, docker, aws, kubernetes, devops, helm, alb, ingress, eks, namecheap
 
 ## **using** industry-standard tools like **Docker**, **Kubernetes**, **Ingress**, and **AWS Load Balancer**.
 
+Link: [github/dakshsawhneyy](https://github.com/dakshsawhneyy/Three_Tier_App/tree/master)
+
 ### In today's cloud-native era, deploying scalable applications is crucial. The 3-tier architecture offers modularity and scalability, making it a preferred choice. However, integrating this with AWS EKS and configuring a custom domain presents challenges that we'll address in this guide.
 
 This project helped me understand how production-grade systems are built, deployed, and managed at scale using DevOps practices.
@@ -75,8 +77,6 @@ alb.ingress.kubernetes.io/scheme: internet-facing
 
 Create an instance and ssh into the instance through your terminal  
 After doing ssh into instance, copy the source code from github, i.e., clone the github repo in terminal
-
-Link: [https://github.com/dakshsawhneyy/Three\_Tier\_App.git](https://github.com/dakshsawhneyy/Three_Tier_App.git)
 
 ---
 
