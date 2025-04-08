@@ -1,14 +1,18 @@
 ---
-title: "Deploying a 3-Tier Application on AWS EKS with Custom Domain"
+title: "Deploying a 3-Tier Application on AWS EKS with a Custom Domain - Step-by-Step Guide for Beginners"
 datePublished: Tue Apr 08 2025 09:17:02 GMT+0000 (Coordinated Universal Time)
 cuid: cm98adu8j000109l93wzn6dcq
-slug: deploying-a-3-tier-application-on-aws-eks-with-custom-domain
+slug: deploying-a-3-tier-application-on-aws-eks-with-a-custom-domain-step-by-step-guide-for-beginners
 ogImage: https://cdn.hashnode.com/res/hashnode/image/upload/v1744103721458/7fea4fca-eebf-4d54-a376-76be935567e1.png
 tags: cloud, docker, aws, kubernetes, devops, helm, alb, ingress, eks, namecheap, eks-cluster, eks-project
 
 ---
 
-### In this blog, I’ll walk you through how I deployed a real-world **three-tier application** (frontend, backend, and database) on **Amazon EKS (Elastic Kubernetes Service)—using** industry-standard tools like **Docker**, **Kubernetes**, **Ingress**, and **AWS Load Balancer**.
+## In this blog, I’ll walk you through how I deployed a real-world **three-tier application** (frontend, backend, and database) on **Amazon EKS (Elastic Kubernetes Service) using domain purchased from *Namecheap***
+
+## **using** industry-standard tools like **Docker**, **Kubernetes**, **Ingress**, and **AWS Load Balancer**.
+
+### In today's cloud-native era, deploying scalable applications is crucial. The 3-tier architecture offers modularity and scalability, making it a preferred choice. However, integrating this with AWS EKS and configuring a custom domain presents challenges that we'll address in this guide.
 
 This project helped me understand how production-grade systems are built, deployed, and managed at scale using DevOps practices.
 
@@ -20,10 +24,44 @@ Whether you’re a student like me or a beginner DevOps enthusiast, this guide w
     
 * Exposing services securely with ALB + Ingress
     
-* Using AWS tools like EKS, IAM, and Load Balancer Controllers
+
+Using AWS tools like EKS, IAM, and Load Balancer Controllers
+
+---
+
+### Prerequisites:
+
+* To follow along, you should have:
     
+    * Basic knowledge of Kubernetes and AWS
+        
+    * An EKS cluster up and running
+        
+    * kubectl configured to access your cluster
+        
+    * AWS CLI configured
+        
+    * A registered domain (e.g., from Namecheap) \[You can perform on your own ip address as well.\]
+        
 
 Let’s dive in. 🛠️
+
+---
+
+## Troubleshooting & Mistakes I Made
+
+### 1\. IAM Role AccessDenied
+
+I initially didn't attach the correct policy to the IAM role used by the AWS Load Balancer Controller. It threw an `AccessDenied: elasticloadbalancing:DescribeListenerAttributes`error.  
+**Fix**: Attach it `ElasticLoadBalancingFullAccess` to the controller's IAM role.
+
+### 2\. Ingress Not Working
+
+I forgot to use the correct annotation in the Ingress manifest:
+
+```yaml
+alb.ingress.kubernetes.io/scheme: internet-facing
+```
 
 ---
 
@@ -161,7 +199,7 @@ CMD ["node","index.js"]    # Since it is node app - so need to run index.js
 
 ### Instead of building image again, create a repo on ECR and then directly push it to that
 
-After creating image from Dockerfile, push it to ECR by following the steps given in “ VIEW PUSH COMMANDS.”
+After creating an image from the Dockerfile, push it to ECR by following the steps given in “ VIEW PUSH COMMANDS.”
 
 ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1744077425905/bc766240-d6a7-49a8-88a9-d9451d1d8cff.png align="center")
 
@@ -554,7 +592,7 @@ Then hit with “kubectl apply -f .”
 
 ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1744102264144/23caa814-8782-4d1c-a272-96990cac443e.png align="center")
 
-We have linked the load balancer URL with the challenge.cctlds.online
+We have linked the load balancer URL with the challenge. cctlds.online
 
 * This load balancer allows public access to ingress and this load balancer acts as an ingress controller
     
@@ -573,4 +611,12 @@ And HURRAYY !! 🎉🎉
 
 Backend is running fine too
 
-## So here we have deployed three tier app on our EKS Cluster
+---
+
+# Final Thoughts:
+
+## Deploying a real-world 3-tier MERN application on AWS EKS with a custom domain was a huge milestone for me. This project taught me how different DevOps tools and cloud services work together—from Kubernetes manifests to Ingress rules and DNS configuration.
+
+If you're learning DevOps, cloud, or Kubernetes, this project is a great way to bring everything together in a practical scenario.
+
+I’ll continue building on this by adding monitoring with Prometheus + Grafana, CI/CD with GitHub Actions, and security practices like network policies and secrets management. Stay tuned! 🔐🚀
