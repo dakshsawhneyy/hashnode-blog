@@ -3,6 +3,7 @@ title: "DevSecOps CICD Project - SonarQube + OWASP + Trivy + Docker + Jenkins"
 datePublished: Thu Apr 10 2025 02:12:09 GMT+0000 (Coordinated Universal Time)
 cuid: cm9aq34u1000c09lbcbljgbnr
 slug: devsecops-cicd-project-sonarqube-owasp-trivy-docker-jenkins
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1744251192792/74c28d90-24d6-4146-a639-6d600897e6f6.png
 ogImage: https://cdn.hashnode.com/res/hashnode/image/upload/v1744251098939/45207002-c04b-408b-be50-ccac8c8afc0f.png
 
 ---
@@ -23,8 +24,6 @@ In this project, I built a **CI/CD pipeline** that not only builds and deploys a
     
 
 This blog walks through how I set up this end-to-end pipeline, integrated security tools into it, and followed DevSecOps principles—**shifting security left.**
-
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1744190347543/58ea862f-ebdf-4f6f-bf15-bdc77f38ea98.png align="center")
 
 ---
 
