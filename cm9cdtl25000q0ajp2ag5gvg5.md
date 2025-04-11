@@ -3,6 +3,7 @@ title: "Deploying a two-tier app on AWS"
 datePublished: Fri Apr 11 2025 06:04:20 GMT+0000 (Coordinated Universal Time)
 cuid: cm9cdtl25000q0ajp2ag5gvg5
 slug: deploying-a-two-tier-app-on-aws
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1744354057510/4d64da24-7d4f-4d29-94fa-e370a70a9367.png
 ogImage: https://cdn.hashnode.com/res/hashnode/image/upload/v1744351378391/eda4f19f-66c7-4da2-8cbf-9c913cef0b2b.png
 tags: docker, aws, kubernetes, helm, docker-compose, helm-chart, two-tier-application
 
