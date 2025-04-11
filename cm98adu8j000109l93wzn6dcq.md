@@ -3,6 +3,7 @@ title: "Deploying a 3-Tier Application on AWS EKS with a Custom Domain - Step-by
 datePublished: Tue Apr 08 2025 09:17:02 GMT+0000 (Coordinated Universal Time)
 cuid: cm98adu8j000109l93wzn6dcq
 slug: deploying-a-3-tier-application-on-aws-eks-with-a-custom-domain-step-by-step-guide-for-beginners
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1744353977949/01e7dadf-1799-4d54-a558-8efd01a6db76.png
 ogImage: https://cdn.hashnode.com/res/hashnode/image/upload/v1744103721458/7fea4fca-eebf-4d54-a376-76be935567e1.png
 tags: cloud, docker, aws, kubernetes, devops, helm, alb, ingress, eks, namecheap, eks-cluster, eks-project
 
