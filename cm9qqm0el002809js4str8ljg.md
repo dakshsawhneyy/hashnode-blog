@@ -37,6 +37,46 @@ tags: microservices, docker, aws, kubernetes, automation, jenkins, e-commerce, c
 * Helm (Monitoring using grafana and prometheus)
     
 
+# Mistakes I Made & What I Learned
+
+#### **Mistake: Incorrect ALB Configuration for EKS**
+
+* **Description:** I faced difficulties with the Application Load Balancer (ALB) setup, which led to issues with routing and service discovery in AWS EKS.
+    
+* **Solution:** I revisited the ALB configuration, following best practices for routing and integrating it with Kubernetes services to ensure proper traffic management.
+    
+
+  
+**Mistake: Ignoring IAM Permissions in AWS EKS**
+
+* **Description:** I neglected to properly configure IAM roles and security policies, leading to access and permission issues when deploying on EKS.
+    
+* **Solution:** After researching the required IAM configurations, I ensured that all roles and security groups were set correctly, granting the necessary permissions to the services.
+    
+
+#### **Mistake: Not Properly Managing Secrets**
+
+* **Description:** I initially mishandled sensitive credentials, which led to security risks and potential exposure of private data.
+    
+* **Solution:** I adopted best practices for managing secrets using AWS Secrets Manager and Kubernetes Secrets to securely store and access sensitive information.
+    
+
+#### **Mistake: Skipping Documentation of the Deployment Process**
+
+* **Description:** I didn’t document the deployment process properly, making it hard to revisit and explain how the app was set up later.
+    
+* **Solution:** I documented the entire deployment process step-by-step, including specific configurations and setup instructions, for future reference and for anyone working with the project.
+    
+
+#### **Mistake: Missing Detailed Logging and Error Handling**
+
+* **Description:** My application initially lacked proper logging and error handling, making it difficult to diagnose issues during runtime.
+    
+* **Solution:** I added comprehensive logging and error handling across all layers of the application, which allowed me to easily trace and resolve issues as they arose.
+    
+
+---
+
 ### Prerequisites to implement this project:
 
 Note:
@@ -646,7 +686,6 @@ Our site is deployed on our custom domain 🎉🎉🎉
 
 * **Login to Argo from CLI**
     
-
 * **COPY**
     
     ```bash
@@ -688,7 +727,7 @@ Our site is deployed on our custom domain 🎉🎉🎉
     argocd cluster add  dakshsawhneyy@wearsphere.ap-south-1.eksctl.io --name wearsphere
     ```
     
-    > ***\[!Tip\]*** [dakshsawhneyy@wearsphere.ap-south-1.eksctl.io](mailto:dakshsawhneyy@wearsphere.ap-south-1.eksctl.io) ***--&gt; This should be your EKS Cluster Name.***
+    > ***\[!Tip\]*** [dakshsawhneyy@wearsphere.ap-south-1.eksctl.io](mailto:dakshsawhneyy@wearsphere.ap-south-1.eksctl.io) ***\--&gt; This should be your EKS Cluster Name.***
     > 
     > ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1745177225473/eb6189d4-b5ec-4f39-8db2-13df4f39cd7a.png align="center")
     
@@ -696,7 +735,6 @@ Our site is deployed on our custom domain 🎉🎉🎉
         
     * ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1745177259741/e30e59ef-5e1e-4b86-bdb0-132c1a2f30fd.png align="center")
         
-    
     * **Now, go to <mark>Applications</mark> and click on <mark>New App</mark>**
         
     
