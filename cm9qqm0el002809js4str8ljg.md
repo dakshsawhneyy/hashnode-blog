@@ -8,13 +8,16 @@ tags: microservices, docker, aws, kubernetes, automation, jenkins, e-commerce, c
 
 ---
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1745184201166/03880bec-00b1-4f93-a8cf-3e6b85d1ff2b.jpeg align="center")
+  
 
 ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1745184209457/2e0205a3-df94-49d1-9015-b4bcd1b7bb28.jpeg align="center")
 
 ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1745184215704/3eec28bf-9519-4fb6-8046-511d0e063a57.jpeg align="center")
 
-### <mark>Project Deployment Flow:</mark>
+### GitHub Link: [https://github.com/dakshsawhneyy/WearSphere-Ecommerce-MERN.git](https://github.com/dakshsawhneyy/WearSphere-Ecommerce-MERN.git)
+
+###   
+<mark>Project Deployment Flow:</mark>
 
 ## Tech stack used in this project:
 
@@ -34,7 +37,9 @@ tags: microservices, docker, aws, kubernetes, automation, jenkins, e-commerce, c
     
 * AWS EKS (Kubernetes)
     
-* Helm (Monitoring using grafana and prometheus)
+* Helm (Monitoring using grafana and prometheus)  
+    
+    ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1745326413222/7e18cfdf-192e-4cc0-b100-2d3b3e99c604.png align="center")
     
 
 # Mistakes I Made & What I Learned
@@ -46,7 +51,6 @@ tags: microservices, docker, aws, kubernetes, automation, jenkins, e-commerce, c
 * **Solution:** I revisited the ALB configuration, following best practices for routing and integrating it with Kubernetes services to ensure proper traffic management.
     
 
-  
 **Mistake: Ignoring IAM Permissions in AWS EKS**
 
 * **Description:** I neglected to properly configure IAM roles and security policies, leading to access and permission issues when deploying on EKS.
