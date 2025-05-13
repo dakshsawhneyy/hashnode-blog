@@ -3,7 +3,7 @@ title: "Deploying WearSphere: A 4-Tier E-commerce App on AWS with DevSecOps & EK
 datePublished: Mon Apr 21 2025 07:11:08 GMT+0000 (Coordinated Universal Time)
 cuid: cm9qqm0el002809js4str8ljg
 slug: deploying-wearsphere-a-4-tier-e-commerce-app-on-aws-with-devsecops-and-eks
-cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1745217566620/9346c4e2-6998-4740-a0ea-cb8bfb526527.png
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1747136914173/ad055101-364c-4232-b15d-822cc1593bb7.png
 tags: microservices, docker, aws, kubernetes, automation, jenkins, e-commerce, cicd, prometheus, devsecops, grafana, eks, eks-cluster, 4-tier-app
 
 ---
