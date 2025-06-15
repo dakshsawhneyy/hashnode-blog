@@ -8,7 +8,10 @@ tags: microservices, docker, aws, kubernetes, automation, jenkins, e-commerce, c
 
 ---
 
-  
+### **Anyone can build a MERN app.**  
+But *WearSphere* isn’t just another side project — it’s a **4-tier e-commerce platform**, **fully automated** and deployed on **AWS** using **DevOps**, **DevSecOps**, and **GitOps** best practices. From secure CI/CD pipelines to a custom domain and EKS-powered scalability, every layer was built with **real-world production** in mind.
+
+### **Introducing *WearSphere*** — a secure, scalable, and enterprise-ready e-commerce solution engineered with modern cloud-native architecture.
 
 ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1745184209457/2e0205a3-df94-49d1-9015-b4bcd1b7bb28.jpeg align="center")
 
@@ -16,7 +19,6 @@ tags: microservices, docker, aws, kubernetes, automation, jenkins, e-commerce, c
 
 ### GitHub Link: [https://github.com/dakshsawhneyy/WearSphere-Ecommerce-MERN.git](https://github.com/dakshsawhneyy/WearSphere-Ecommerce-MERN.git)
 
-###   
 <mark>Project Deployment Flow:</mark>
 
 ## Tech stack used in this project:
@@ -37,7 +39,7 @@ tags: microservices, docker, aws, kubernetes, automation, jenkins, e-commerce, c
     
 * AWS EKS (Kubernetes)
     
-* Helm (Monitoring using grafana and prometheus)  
+* Helm (Monitoring using grafana and prometheus)
     
     ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1745326413222/7e18cfdf-192e-4cc0-b100-2d3b3e99c604.png align="center")
     
