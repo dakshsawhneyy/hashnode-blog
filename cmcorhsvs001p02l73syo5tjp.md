@@ -10,7 +10,7 @@ tags: docker, json, bash, slack, logging, logs, cronjob, production-ready, shell
 
 ---
 
-## Ever wondered how big tech companies ensure their containers stay healthy, websites stay up, logs stay clean, and alerts don’t spam your team — all in an automated, self-healing way?
+## Ever wondered how big tech companies ensure their containers stay healthy, websites stay up, logs stay clean, and alerts don’t spam your team - all in an automated, self-healing way?
 
 In the real world, infrastructure monitoring isn’t just about running a few `docker ps` or pinging a website. It’s about combining smart health checks, meaningful alerts, automated log handling, and real-time status dashboards — seamlessly and reliably.
 
