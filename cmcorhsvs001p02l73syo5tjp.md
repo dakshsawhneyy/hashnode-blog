@@ -3,7 +3,7 @@ title: "Infra Health Monitoring Suite"
 datePublished: Fri Jul 04 2025 11:59:26 GMT+0000 (Coordinated Universal Time)
 cuid: cmcorhsvs001p02l73syo5tjp
 slug: infra-health-monitoring-suite
-ogImage: https://cdn.hashnode.com/res/hashnode/image/upload/v1751630269292/9d5b62ad-a079-4afa-814b-778f4ee34062.png
+ogImage: https://cdn.hashnode.com/res/hashnode/image/upload/v1752038731562/da9848f4-7816-4c34-9a1c-d3b3946b5c07.png
 tags: docker, json, bash, slack, logging, logs, cronjob, production-ready, shell-script, log-rotation, website-health-check-tools
 
 ---
