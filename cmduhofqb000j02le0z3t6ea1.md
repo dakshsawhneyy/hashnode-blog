@@ -3,7 +3,7 @@ title: "Creation of Secure Web Server Using Ansible"
 datePublished: Sat Aug 02 2025 16:50:59 GMT+0000 (Coordinated Universal Time)
 cuid: cmduhofqb000j02le0z3t6ea1
 slug: creation-of-secure-web-server-using-ansible
-ogImage: https://cdn.hashnode.com/res/hashnode/image/upload/v1754153595350/4443e51e-26d4-45f7-a953-f214e3cc42cb.png
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1754154925444/e3f17609-9589-4a5f-8bcb-a908ab4aca60.png
 tags: web-servers, ansible, automation, devops, web-server, ansible-playbook, ad-hoc
 
 ---
