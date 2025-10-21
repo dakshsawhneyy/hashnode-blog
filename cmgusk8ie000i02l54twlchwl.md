@@ -29,6 +29,8 @@ tags: aws, azure, ansible, cloud-computing, devops, sre, terraform, multi-cloud,
 
 Multi cloud doesn't mean using multiple cloud platforms but instead, it is a business strategy to solve the problems mentioned above
 
+**Code Repo**: [https://github.com/dakshsawhneyy/AWS-1\_to\_1Million\_Users.git](https://github.com/dakshsawhneyy/AWS-1_to_1Million_Users.git)
+
 ## The Architecture:
 
 ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1760695089496/efe99a40-70ca-4059-9c8e-08754adfa88a.png align="left")
