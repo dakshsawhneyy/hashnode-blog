@@ -3,7 +3,7 @@ title: "Multi Cloud Orchestration"
 datePublished: Fri Oct 17 2025 11:54:46 GMT+0000 (Coordinated Universal Time)
 cuid: cmgusk8ie000i02l54twlchwl
 slug: multi-cloud-orchestration
-cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1760764242069/ac68ae8b-e76b-4e44-b160-b72ca84ad6e0.png
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1761291592190/7c3095aa-ec6b-4dac-96c1-c80960c6ca53.png
 tags: aws, azure, ansible, cloud-computing, devops, sre, terraform, multi-cloud, observability, iac, datadog
 
 ---
