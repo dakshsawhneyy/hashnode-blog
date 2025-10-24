@@ -22,6 +22,8 @@ This project is divided into five phases, each one handling a different user loa
 
 ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1761290956962/393ad323-bdd8-4514-9730-693a3b41506e.png align="center")
 
+---
+
 ### Phase 0: The MVP (1 to 100 Users)
 
 We just have one EC2 instance handling the load. The PostgreSQL database runs as a container on the same instance. Docker Compose is used to manage the containers, and a [`user-data.sh`](http://user-data.sh) script automatically configures the instance on boot.
@@ -37,6 +39,8 @@ We just have one EC2 instance handling the load. The PostgreSQL database runs as
     ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1761291014376/fe8ae4ef-3123-4460-a0ff-b33fd34c0541.png align="center")
     
 
+---
+
 ### Phase 1: The Growth Phase (100 to 10,000 Users)
 
 For handling the single instance's single point of failure, we introduced multiple EC2 instances. To manage them, we added an Auto Scaling Group. To distribute the load, we added an Application Load Balancer. We also solved the resource contention by moving the database to a managed **AWS RDS** instance with Multi-AZ replication.
@@ -47,6 +51,8 @@ For handling the single instance's single point of failure, we introduced multip
     
     ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1761291028496/f283fffd-4615-441d-a2f9-8660ef4901dd.png align="center")
     
+
+---
 
 ### Phase 2: The Microservices Era (10,000 to 100,000 Users)
 
